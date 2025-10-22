@@ -8,7 +8,7 @@
 // - Use `@Enumerated(EnumType.STRING)` for status
 // - Create enum `ReservationStatus { PENDING, CONFIRMED, CANCELLED }`
 // - Add helper method `isExpired()` returning true if now is after `expiresAt`
-package com.meli.inventory.model;
+package com.meli.inventory.model.entities;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
@@ -46,10 +46,10 @@ public class Reservation {
     private String storeId;
 
     @NonNull
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @NonNull
-    private LocalDateTime expiresAt;
+    private LocalDateTime expiresAt = LocalDateTime.now().plusMinutes(10);
 
     public boolean isExpired() {
         return LocalDateTime.now().isAfter(this.expiresAt);

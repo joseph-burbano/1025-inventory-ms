@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  inventory-ms:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - h2-data:/app/data
+      - ./logs:/app/logs
+    environment:
+      - SPRING_PROFILES_ACTIVE=default
+      - SPRING_DATASOURCE_URL=jdbc:h2:file:/app/data/inventory
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+volumes:
+  h2-data:
+    name: inventory-h2-data

@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.meli.inventory.command.exception.ReservationNotFoundException;
 import com.meli.inventory.command.service.ReservationService;
-import com.meli.inventory.model.Reservation;
+import com.meli.inventory.model.entities.Reservation;
 @RestController
 @RequestMapping("/api/v1/reservations")
 public class ReservationController {
@@ -35,7 +35,7 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<Reservation> createReservation(@RequestBody ReservationRequest request) {
         Reservation reservation = reservationService.createReservation(request.getSku(), request.getQuantity(), request.getStoreId());
         return new ResponseEntity<>(reservation, HttpStatus.CREATED);

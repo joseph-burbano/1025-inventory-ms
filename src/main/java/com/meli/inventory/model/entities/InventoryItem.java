@@ -7,8 +7,9 @@
 // - Add Lombok annotations: @Data, @NoArgsConstructor, @AllArgsConstructor
 // - Include @GeneratedValue for id
 // - Add a helper method decreaseStock(int amount) that throws if amount > quantity.
-package com.meli.inventory.model;
+package com.meli.inventory.model.entities;
 
+import com.meli.inventory.command.exception.NotEnoughStockException;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
@@ -44,8 +45,9 @@ public class InventoryItem {
 
     public void decreaseStock(int amount) {
         if (amount > this.quantity) {
-            throw new IllegalArgumentException("Amount to decrease exceeds available quantity");
+            throw new NotEnoughStockException("Not enough stock available for SKU " + this.sku);
         }
         this.quantity -= amount;
     }
+
 }

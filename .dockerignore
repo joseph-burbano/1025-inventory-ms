@@ -1,0 +1,32 @@
+# Build output
+target/
+build/
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# Logs
+logs/
+*.log
+
+# Version control
+.git/
+.gitignore
+
+# Maven
+.mvn/
+mvnw
+mvnw.cmd
+
+# Misc
+*.jar
+*.war
+*.ear
+*.class
+*.swp
+*~
