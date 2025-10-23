@@ -12,9 +12,12 @@
 // - Handle exceptions with `@ExceptionHandler` methods.
 package com.meli.inventory.command.controller;
 
+import com.meli.inventory.model.requests.ReservationRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,10 +39,15 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<Reservation> createReservation(@RequestBody ReservationRequest request) {
-        Reservation reservation = reservationService.createReservation(request.getSku(), request.getQuantity(), request.getStoreId());
+    public ResponseEntity<Reservation> createReservation(
+            @Valid @RequestBody ReservationRequest request) {
+
+        Reservation reservation = reservationService.createReservation(
+                request.getSku(), request.getQuantity(), request.getStoreId());
         return new ResponseEntity<>(reservation, HttpStatus.CREATED);
     }
+
+
 
     @PostMapping("/{id}/confirm")
     public ResponseEntity<Reservation> confirmReservation(@PathVariable Long id) {
@@ -51,41 +59,5 @@ public class ReservationController {
     public ResponseEntity<Reservation> cancelReservation(@PathVariable Long id) {
         Reservation reservation = reservationService.cancelReservation(id);
         return new ResponseEntity<>(reservation, HttpStatus.OK);
-    }
-
-    @ExceptionHandler(ReservationNotFoundException.class)
-    public ResponseEntity<String> handleReservationNotFound(ReservationNotFoundException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
-    }
-
-    public static class ReservationRequest {
-        private String sku;
-        private int quantity;
-        private String storeId;
-
-        // Getters and Setters
-        public String getSku() {
-            return sku;
-        }
-
-        public void setSku(String sku) {
-            this.sku = sku;
-        }
-
-        public int getQuantity() {
-            return quantity;
-        }
-
-        public void setQuantity(int quantity) {
-            this.quantity = quantity;
-        }
-
-        public String getStoreId() {
-            return storeId;
-        }
-
-        public void setStoreId(String storeId) {
-            this.storeId = storeId;
-        }
     }
 }

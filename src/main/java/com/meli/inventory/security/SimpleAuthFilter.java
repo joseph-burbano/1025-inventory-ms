@@ -13,7 +13,10 @@ package com.meli.inventory.security;
 
 import java.io.IOException;
 import java.util.Base64;
+import java.util.List;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -35,11 +38,12 @@ public class SimpleAuthFilter extends OncePerRequestFilter {
 
         String path = request.getRequestURI();
 
-        // ✅ Exclude docs, health, H2 console, actuator
+        // ✅ Excluir rutas públicas
         if (path.startsWith("/swagger-ui")
                 || path.startsWith("/v3/api-docs")
                 || path.startsWith("/actuator")
-                || path.startsWith("/h2-console")) {
+                || path.startsWith("/h2-console")
+                || path.startsWith("/error")) {
             filter.doFilter(request, response);
             return;
         }
@@ -51,13 +55,19 @@ public class SimpleAuthFilter extends OncePerRequestFilter {
         }
 
         try {
-            String base64Credentials = authHeader.substring(AUTH_PREFIX.length());
-            String credentials = new String(Base64.getDecoder().decode(base64Credentials));
+            String base64 = authHeader.substring(AUTH_PREFIX.length());
+            String credentials = new String(Base64.getDecoder().decode(base64));
 
             if (!VALID_CREDENTIALS.equals(credentials)) {
                 unauthorized(response);
                 return;
             }
+
+            // ✅ Registrar autenticación en el contexto
+            UsernamePasswordAuthenticationToken authentication =
+                    new UsernamePasswordAuthenticationToken("admin", null, List.of());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
         } catch (IllegalArgumentException e) {
             unauthorized(response);
             return;
@@ -71,4 +81,6 @@ public class SimpleAuthFilter extends OncePerRequestFilter {
         response.getWriter().write("Unauthorized");
     }
 }
+
+
 

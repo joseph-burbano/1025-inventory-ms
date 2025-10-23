@@ -3,6 +3,7 @@ package com.meli.inventory.command.controller;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.meli.inventory.model.requests.ReservationRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -13,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import com.meli.inventory.command.exception.ReservationNotFoundException;
 import com.meli.inventory.command.service.ReservationService;
 import com.meli.inventory.model.entities.Reservation;
-import com.meli.inventory.command.controller.ReservationController.ReservationRequest;
 
 class ReservationControllerTest {
 
@@ -80,17 +80,4 @@ class ReservationControllerTest {
         verify(reservationService).cancelReservation(reservationId);
     }
 
-    @Test
-    void handleReservationNotFound_ShouldReturnNotFoundStatus() {
-        // Arrange
-        String errorMessage = "Reservation not found";
-        ReservationNotFoundException ex = new ReservationNotFoundException(errorMessage);
-
-        // Act
-        ResponseEntity<String> response = reservationController.handleReservationNotFound(ex);
-
-        // Assert
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-        assertEquals(errorMessage, response.getBody());
-    }
 }

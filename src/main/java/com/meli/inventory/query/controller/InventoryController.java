@@ -44,7 +44,7 @@ public class InventoryController {
         }
     }
 
-    @GetMapping("/")
+    @GetMapping()
     public ResponseEntity<List<InventoryView>> getAllInventory() {
         List<InventoryView> allInventory = inventoryQueryService.getAll();
         return ResponseEntity.ok(allInventory);

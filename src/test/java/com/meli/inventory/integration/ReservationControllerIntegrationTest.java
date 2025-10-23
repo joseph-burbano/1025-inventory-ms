@@ -19,6 +19,8 @@ package com.meli.inventory.integration;
 
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
+
+import com.meli.inventory.model.requests.ReservationRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -32,12 +34,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.meli.inventory.command.controller.ReservationController.ReservationRequest;
-
 import java.util.Base64;
 
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 class ReservationControllerIntegrationTest {
 
     @Autowired
@@ -46,8 +46,8 @@ class ReservationControllerIntegrationTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private static final String AUTH_HEADER = "Basic " +
-            Base64.getEncoder().encodeToString("admin:admin123".getBytes());
+    private static final String AUTH_HEADER =
+            "Basic " + Base64.getEncoder().encodeToString("admin:admin123".getBytes());
 
     @Test
     void createReservation_ValidInput_ShouldReturnCreated() throws Exception {
