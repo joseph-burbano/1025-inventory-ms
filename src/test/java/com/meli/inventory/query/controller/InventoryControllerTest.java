@@ -1,18 +1,20 @@
 package com.meli.inventory.query.controller;
 
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
+import com.meli.inventory.query.model.InventoryView;
+import com.meli.inventory.query.service.InventoryQueryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import com.meli.inventory.query.model.InventoryView;
-import com.meli.inventory.query.service.InventoryQueryService;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
 class InventoryControllerTest {
 

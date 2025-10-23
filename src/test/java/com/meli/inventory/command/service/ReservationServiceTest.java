@@ -1,22 +1,5 @@
 package com.meli.inventory.command.service;
 
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
-import org.mockito.Mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import org.mockito.MockitoAnnotations;
-
 import com.meli.inventory.command.exception.ReservationNotFoundException;
 import com.meli.inventory.events.EventBus;
 import com.meli.inventory.events.StockUpdatedEvent;
@@ -24,6 +7,16 @@ import com.meli.inventory.model.entities.InventoryItem;
 import com.meli.inventory.model.entities.Reservation;
 import com.meli.inventory.model.entities.Reservation.ReservationStatus;
 import com.meli.inventory.model.repositories.ReservationRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 public class ReservationServiceTest {
 

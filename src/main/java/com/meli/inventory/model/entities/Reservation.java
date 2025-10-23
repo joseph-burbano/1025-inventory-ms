@@ -9,19 +9,14 @@
 // - Create enum `ReservationStatus { PENDING, CONFIRMED, CANCELLED }`
 // - Add helper method `isExpired()` returning true if now is after `expiresAt`
 package com.meli.inventory.model.entities;
-import java.time.LocalDateTime;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+
+import java.time.LocalDateTime;
 @Entity
 @Table(name = "reservations")
 @Data

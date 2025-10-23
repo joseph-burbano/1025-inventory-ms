@@ -3,7 +3,9 @@ package com.meli.inventory.model;
 import com.meli.inventory.command.exception.NotEnoughStockException;
 import com.meli.inventory.model.entities.InventoryItem;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class InventoryItemTest {
 

@@ -1,20 +1,20 @@
 package com.meli.inventory.query.service;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
+import com.meli.inventory.events.StockUpdatedEvent;
 import com.meli.inventory.model.entities.InventoryItem;
 import com.meli.inventory.model.repositories.InventoryRepository;
+import com.meli.inventory.query.model.InventoryView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.meli.inventory.events.StockUpdatedEvent;
-import com.meli.inventory.query.model.InventoryView;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class InventoryQueryServiceTest {

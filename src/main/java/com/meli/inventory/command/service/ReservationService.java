@@ -12,12 +12,6 @@
 // - Use `@Transactional`.
 package com.meli.inventory.command.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.meli.inventory.command.exception.ReservationNotFoundException;
 import com.meli.inventory.events.EventBus;
 import com.meli.inventory.events.StockUpdatedEvent;
@@ -25,6 +19,11 @@ import com.meli.inventory.model.entities.Reservation;
 import com.meli.inventory.model.entities.Reservation.ReservationStatus;
 import com.meli.inventory.model.repositories.ReservationRepository;
 import com.meli.inventory.query.service.InventoryQueryService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ReservationService {

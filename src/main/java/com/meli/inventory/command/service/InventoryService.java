@@ -20,19 +20,17 @@
 
 package com.meli.inventory.command.service;
 
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.meli.inventory.command.exception.NotEnoughStockException;
 import com.meli.inventory.events.EventBus;
 import com.meli.inventory.events.StockUpdatedEvent;
 import com.meli.inventory.model.entities.InventoryItem;
 import com.meli.inventory.model.repositories.InventoryRepository;
-
 import io.micrometer.core.instrument.MeterRegistry;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 public class InventoryService {

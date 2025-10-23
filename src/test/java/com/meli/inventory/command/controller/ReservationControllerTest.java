@@ -1,8 +1,7 @@
 package com.meli.inventory.command.controller;
 
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
-
+import com.meli.inventory.command.service.ReservationService;
+import com.meli.inventory.model.entities.Reservation;
 import com.meli.inventory.model.requests.ReservationRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,9 +10,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import com.meli.inventory.command.exception.ReservationNotFoundException;
-import com.meli.inventory.command.service.ReservationService;
-import com.meli.inventory.model.entities.Reservation;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class ReservationControllerTest {
 

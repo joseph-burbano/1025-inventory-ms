@@ -9,13 +9,14 @@
 // - Log every published event (use SLF4J logger).
 package com.meli.inventory.events;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 @Component
 public class EventBus {
     private static final Logger logger = LoggerFactory.getLogger(EventBus.class);

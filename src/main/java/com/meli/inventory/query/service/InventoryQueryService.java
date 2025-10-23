@@ -12,21 +12,20 @@
 // - Use SLF4J for logging updates.
 package com.meli.inventory.query.service;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
-
+import com.meli.inventory.events.StockUpdatedEvent;
+import com.meli.inventory.model.entities.InventoryItem;
+import com.meli.inventory.model.repositories.InventoryRepository;
+import com.meli.inventory.query.model.InventoryView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
-import com.meli.inventory.events.StockUpdatedEvent;
-import com.meli.inventory.model.entities.InventoryItem;
-import com.meli.inventory.model.repositories.InventoryRepository;
-import com.meli.inventory.query.model.InventoryView;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 @Service
 public class InventoryQueryService {

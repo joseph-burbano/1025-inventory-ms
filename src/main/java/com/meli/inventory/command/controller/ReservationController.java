@@ -12,22 +12,14 @@
 // - Handle exceptions with `@ExceptionHandler` methods.
 package com.meli.inventory.command.controller;
 
+import com.meli.inventory.command.service.ReservationService;
+import com.meli.inventory.model.entities.Reservation;
 import com.meli.inventory.model.requests.ReservationRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.meli.inventory.command.exception.ReservationNotFoundException;
-import com.meli.inventory.command.service.ReservationService;
-import com.meli.inventory.model.entities.Reservation;
+import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/reservations")
 public class ReservationController {
