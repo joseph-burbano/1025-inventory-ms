@@ -38,8 +38,29 @@ src/
 - `GET /api/v1/inventory/{sku}` — single item
 - `GET /api/v1/inventory/changes?since=DATE` — items updated since timestamp
 
-OpenAPI/Swagger: `http://localhost:8080/swagger-ui.html` (or `/swagger-ui/index.html`)
+### Swagger / OpenAPI
+- URL: `http://localhost:8080/swagger-ui/index.html`
+- Documentation auto-generated with Springdoc OpenAPI.
+- All secured endpoints require Basic Auth (`admin:admin123`).
+- To test POST endpoints, include:
+    - Header `Authorization: Basic YWRtaW46YWRtaW4xMjM=`
+    - Header `Idempotency-Key: <unique-key>` (required for /reservations)
 
+**Example request via Swagger UI:**
+
+```
+curl -X 'POST'
+'http://localhost:8080/api/v1/reservations'
+-H 'accept: application/json'
+-H 'Authorization: Basic YWRtaW46YWRtaW4xMjM='
+-H 'Idempotency-Key: a1b2c3d4'
+-H 'Content-Type: application/json'
+-d '{
+"sku": "9090",
+"quantity": 2,
+"storeId": "store1"
+}'
+```
 ## Data model (summary)
 - **InventoryItem**(id, sku, name, quantity, version@OptimisticLock)
 - **Reservation**(id, sku, quantity, status[PENDING|CONFIRMED|CANCELLED], storeId, createdAt, expiresAt)
