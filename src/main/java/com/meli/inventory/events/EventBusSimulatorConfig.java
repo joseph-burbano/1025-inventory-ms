@@ -32,10 +32,8 @@ public class EventBusSimulatorConfig {
 
     @PostConstruct
     public void init() {
-        // Log all events for debugging
         eventBus.subscribe(event -> logger.info("Received event: {}", event));
         
-        // Subscribe query service to stock update events for read model synchronization
         eventBus.subscribe(event -> {
             if (event instanceof StockUpdatedEvent stockEvent) {
                 logger.debug("Processing stock update event for SKU: {}", stockEvent.getSku());

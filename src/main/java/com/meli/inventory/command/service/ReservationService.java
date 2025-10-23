@@ -12,9 +12,6 @@
 // - Use `@Transactional`.
 package com.meli.inventory.command.service;
 
-import com.meli.inventory.events.EventBus;
-import com.meli.inventory.events.StockUpdatedEvent;
-import com.meli.inventory.query.service.InventoryQueryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +19,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.meli.inventory.command.exception.ReservationNotFoundException;
+import com.meli.inventory.events.EventBus;
+import com.meli.inventory.events.StockUpdatedEvent;
 import com.meli.inventory.model.entities.Reservation;
 import com.meli.inventory.model.entities.Reservation.ReservationStatus;
 import com.meli.inventory.model.repositories.ReservationRepository;
+import com.meli.inventory.query.service.InventoryQueryService;
 
 @Service
 public class ReservationService {
@@ -43,10 +43,8 @@ public class ReservationService {
 
     @Transactional
     public Reservation createReservation(String sku, int quantity, String storeId) {
-        // First decrease stock (this will throw exception if not enough stock)
         inventoryService.decreaseStock(sku, quantity);
 
-        // Create and save reservation
         Reservation reservation = new Reservation();
         reservation.setSku(sku);
         reservation.setQuantity(quantity);
@@ -54,7 +52,6 @@ public class ReservationService {
         reservation.setStatus(ReservationStatus.PENDING);
         reservation = reservationRepository.save(reservation);
         
-        // Publish stock updated event for eventual consistency
         eventBus.publish(new StockUpdatedEvent(sku,
             inventoryService.findBySku(sku).get().getQuantity()));
             
@@ -68,7 +65,6 @@ public class ReservationService {
         reservation.setStatus(ReservationStatus.CONFIRMED);
         reservation = reservationRepository.save(reservation);
         
-        // Publish stock updated event for eventual consistency
         eventBus.publish(new StockUpdatedEvent(reservation.getSku(),
             inventoryService.findBySku(reservation.getSku()).get().getQuantity()));
             
@@ -80,7 +76,6 @@ public class ReservationService {
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new ReservationNotFoundException("Reservation with ID " + reservationId + " not found."));
 
-        // 🔒 Verificar si ya estaba cancelada o confirmada
         if (reservation.getStatus() == ReservationStatus.CANCELLED) {
             logger.warn("Reservation {} is already cancelled — skipping stock restore", reservationId);
             return reservation;
@@ -91,10 +86,8 @@ public class ReservationService {
             return reservation;
         }
 
-        // Cambiar estado
         reservation.setStatus(ReservationStatus.CANCELLED);
 
-        // Restaurar stock solo una vez
         int reservedQty = reservation.getQuantity();
         int newQuantity = inventoryService.findBySku(reservation.getSku())
                 .map(item -> item.getQuantity() + reservedQty)
@@ -103,7 +96,6 @@ public class ReservationService {
         inventoryService.adjustStock(reservation.getSku(), newQuantity);
         reservation = reservationRepository.save(reservation);
 
-        // Publicar evento
         eventBus.publish(new StockUpdatedEvent(reservation.getSku(), newQuantity));
 
         return reservation;

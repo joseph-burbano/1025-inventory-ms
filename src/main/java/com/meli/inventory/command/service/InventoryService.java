@@ -58,10 +58,8 @@ public class InventoryService {
         item.decreaseStock(amount);
         inventoryRepository.save(item);
         
-        // Increment metrics counter
         meterRegistry.counter("inventory_updates_total", "type", "decrease", "sku", sku).increment();
         
-        // Publish event for eventual consistency in read replicas
         eventBus.publish(new StockUpdatedEvent(sku, item.getQuantity()));
     }
 
@@ -72,10 +70,8 @@ public class InventoryService {
         item.setQuantity(newQuantity);
         inventoryRepository.save(item);
         
-        // Increment metrics counter
         meterRegistry.counter("inventory_updates_total", "type", "adjust", "sku", sku).increment();
         
-        // Publish event for eventual consistency in read replicas
         eventBus.publish(new StockUpdatedEvent(sku, newQuantity));
     }
 }
